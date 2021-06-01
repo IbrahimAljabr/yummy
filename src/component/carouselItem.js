@@ -1,28 +1,15 @@
 import React from "react";
-import { View, StyleSheet, Text, Image, Dimensions, TouchableHighlight } from "react-native";
+import { View, StyleSheet, Text, Image, Dimensions } from "react-native";
 
 const { width, height } = Dimensions.get("window");
-const title = "Find Recipes By Max Calories";
 
 const CarouselItem = ({ item }) => {
   return (
     <View style={styles.cardView}>
-      <TouchableHighlight
-        style={styles.image}
-        onPress={() => {
-          alert("You tapped the button!");
-        }}
-      >
-        <Image
-          style={styles.image}
-          source={{
-            uri: "https://www.eatwell101.com/wp-content/uploads/2019/03/oven-baked-salmon-in-foil-packets.jpg",
-          }}
-        />
-      </TouchableHighlight>
-
+      <Image style={styles.image} source={{ uri: item.url }} />
       <View style={styles.textView}>
-        <Text style={styles.itemTitle}>{title} </Text>
+        <Text style={styles.itemTitle}> {item.title}</Text>
+        <Text style={styles.itemDescription}>{item.description}</Text>
       </View>
     </View>
   );
@@ -30,13 +17,13 @@ const CarouselItem = ({ item }) => {
 
 const styles = StyleSheet.create({
   cardView: {
-    flex: 2,
-    width: width - 20,
-    height: height / 5,
+    flex: 1,
+    width: width,
+    height: height / 2.2,
     backgroundColor: "white",
-    margin: 10,
-    marginTop: 25,
-    borderRadius: 10,
+    margin: 0,
+    // marginTop: 100,
+    // borderRadius: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0.5, height: 0.5 },
     shadowOpacity: 0.5,
@@ -51,9 +38,9 @@ const styles = StyleSheet.create({
     left: 5,
   },
   image: {
-    width: width - 20,
-    height: height / 5,
-    borderRadius: 10,
+    width: width,
+    height: height / 2.2,
+    // borderRadius: 10,
   },
   itemTitle: {
     color: "white",
