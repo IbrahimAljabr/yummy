@@ -1,5 +1,5 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
+import Home from "./src/component/home";
 import { StyleSheet, Text, View } from "react-native";
 import Recipes from './src/component/recipe.js';
 // import { Provider } from 'react-redux';
@@ -8,18 +8,10 @@ import Recipes from './src/component/recipe.js';
 export default function App() {
   return (
     <View style={styles.container}>
+        <Home />
       <Text>What are you looking At !</Text>
-3      <Recipes />
+     <Recipes />
       <StatusBar style="auto" />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

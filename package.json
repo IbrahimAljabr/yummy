@@ -28,6 +28,11 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
     "thunk": "0.0.1"
+    "react-native-fast-image": "^8.3.4",
+    "react-native-gesture-handler": "^1.10.3",
+    "react-native-image-slider-box": "^1.0.12",
+    "react-native-swiper": "^1.6.0-rc.3",
+    "react-native-web": "~0.13.12"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"
