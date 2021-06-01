@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { StyleSheet, Text, View, ScrollView, Dimensions } from "react-native";
-import { Card, Button } from 'react-native-elements';
+import { StyleSheet, Text, View, ScrollView,Dimensions } from "react-native";
+import {  Card, Button } from 'react-native-elements';
 const { width, height } = Dimensions.get("window");
 
 export default class Recipes extends React.Component {
@@ -16,8 +16,8 @@ export default class Recipes extends React.Component {
   }
 
   getData = (name) => {
-
-    this.setState({ loaded: false, error: null, data: null });
+        
+    this.setState({ loaded: false, error: null , data: null });
     let url = `https://api.edamam.com/search?q=${name}&app_id=8e56d6c2&app_key=3722a2efb37e9510d5ee892e2eb9676c`;
 
     let req = new Request(url, {
@@ -50,8 +50,7 @@ export default class Recipes extends React.Component {
         { !this.state.loaded && (
           <Text>LOADING</Text>
         )}
-
-        <Button title="chicken"
+        <Button title="chicken" 
           onPress={() => this.getData('chicken')} />
 
         <Button title="noodle"
@@ -91,12 +90,12 @@ export default class Recipes extends React.Component {
           this.state.data.map(comment => (
             <View style={{
               width: width - 10,
-              height: 640,
+              height: 600,
             }}>
               <Card>
                 <Card.Image source={{ uri: comment.recipe.image, }} style={{
                   width: width - 20,
-                  height: 300,
+                  height:  300,
                   //Below lines will help to set the border radius
                   borderBottomLeftRadius: 20,
                   borderBottomRightRadius: 20,
@@ -109,26 +108,26 @@ export default class Recipes extends React.Component {
                 <Card.Title key={comment.recipe.label}>{comment.recipe.label}</Card.Title>
                 <Card.Divider />
                 <Text numberOfLines={5} key={comment.recipe.label} style={{ marginBottom: 10 }}>
-                  ingredientLines : {comment.recipe.ingredientLines}
+                  ingredientLines : {comment.recipe.ingredientLines} 
                 </Text>
                 <Text key={comment.recipe.label} style={{ marginBottom: 10 }}>
-                  calories : {comment.recipe.calories.toFixed(2)}
-                </Text>
+                  calories : {comment.recipe.calories.toFixed(2)} 
+                  </Text>
 
-                <Text key={comment.recipe.label} style={{ marginBottom: 10 }}>
+                  <Text key={comment.recipe.label} style={{ marginBottom: 10 }}>
 
-                  fat : {comment.recipe.totalNutrients.FAT.quantity.toFixed(2)}
-                </Text>
+              fat : {comment.recipe.totalNutrients.FAT.quantity.toFixed(2)} 
+              </Text>
 
-                <Text key={comment.recipe.label} style={{ marginBottom: 10 }}>
-                  Carbs : {comment.recipe.totalNutrients.CHOCDF.quantity.toFixed(2)}
-                </Text>
-                <Text key={comment.recipe.label} style={{ marginBottom: 10 }}>
-                  Protein : {comment.recipe.totalNutrients.PROCNT.quantity.toFixed(2)}
-                </Text>
+              <Text key={comment.recipe.label} style={{ marginBottom: 10 }}>
+              Carbs : {comment.recipe.totalNutrients.CHOCDF.quantity.toFixed(2)} 
+              </Text>
+              <Text key={comment.recipe.label} style={{ marginBottom: 10 }}>
+              Protein : {comment.recipe.totalNutrients.PROCNT.quantity.toFixed(2)} 
+              </Text>
 
-                <Text key={comment.recipe.label} style={{ marginBottom: 10 }}>
-                  Cholesterol :{comment.recipe.totalNutrients.CHOLE.quantity.toFixed(2)}
+              <Text key={comment.recipe.label} style={{ marginBottom: 10 }}>
+              Cholesterol :{comment.recipe.totalNutrients.CHOLE.quantity.toFixed(2)} 
                 </Text>
               </Card>
             </View>

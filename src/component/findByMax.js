@@ -10,7 +10,7 @@ const CarouselItem = ({ item }) => {
       <TouchableHighlight
         style={styles.image}
         onPress={() => {
-          alert("You tapped the button!");
+          // alert("You tapped the button!");
         }}
       >
         <Image
@@ -62,9 +62,11 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0.8, height: 0.8 },
     shadowOpacity: 1,
     shadowRadius: 3,
-    marginBottom: 5,
+    // marginBottom: 5,
     fontWeight: "bold",
     elevation: 5,
+    position: 'absolute',
+    top: 100,
   },
   itemDescription: {
     color: "white",
