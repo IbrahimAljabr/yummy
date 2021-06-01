@@ -19,6 +19,8 @@ const CarouselItem = ({ item }) => {
         style={styles.image}
         onPress={() => {
           alert("You tapped the button!");
+
+          
         }}
       >
         <Image

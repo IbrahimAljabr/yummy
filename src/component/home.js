@@ -5,12 +5,23 @@ import { dummyData } from "../data/data";
 import Carousel from "./carousel";
 import Find from "./find";
 import FindByMax from "./findByMax";
+import Recipes from './recipe.js';
+import { Button } from 'react-native-elements';
+
 
 const { width, height } = Dimensions.get("window");
 
-export default function App() {
+export default function App({ navigation }) {
   return (
     <View>
+
+      <Button
+      title="Go to Jane's profile"
+      onPress={() =>
+        navigation.navigate('Recipe')
+      }
+    />
+
       <View>
         <Carousel data={dummyData} />
       </View>
