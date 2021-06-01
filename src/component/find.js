@@ -1,25 +1,34 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, SectionList, StatusBar } from "react-native";
-
-import { Typography, Grid, Card, CardHeader, CardContent, CardActions, IconButton, Tabs, Tab } from '@material-ui/core';
-
+import { SearchBar } from 'react-native-elements';
 import { connect } from 'react-redux';
-import { loadRecipes,active } from '../store/find.js'
+import { loadRecipes, searched } from '../store/find.js'
 const RecipeViewer = props => {
     useEffect(() => {
-        props.loadRecipes();
-        props.active()
-    }, []);
-
+        // props.loadRecipes(props.recipes.searched)
+    }, [ props.recipes.searched]);
+    
+    let updateSearch = (search) => {
+        props.searched(search)                
+    };
     return (
         <>
-            <View  style={{ marginBottom: '50px' }} container justify="center" spacing={4}>
+            <SearchBar
+                placeholder="Type Here..."
+                onChangeText={updateSearch}
+            // value={updateSearch}
+            />
+            <View style={{ marginBottom: '50px' }} container justify="center" spacing={4}>
                 {console.log(props)}
                 {props.recipes.recipesList.map((product) => {
 
                     return (
-                        <Text title={product.recipe.label} onPress>{product.recipe.label}</Text>
+                        <>
+                            <Text title={product.recipe.label}>{product.recipe.label}</Text>
 
+
+
+                        </>
                     )
 
                 })}
@@ -34,7 +43,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
     loadRecipes,
-    active
+    searched
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipeViewer);
