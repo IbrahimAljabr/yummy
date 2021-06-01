@@ -3,6 +3,8 @@ import React from 'react';
 import { StyleSheet, Text, View, ScrollView,Dimensions } from "react-native";
 import {  Card, Button } from 'react-native-elements';
 const { width, height } = Dimensions.get("window");
+import superagent from 'superagent';
+
 
 export default class Recipes extends React.Component {
   constructor() {
@@ -18,70 +20,50 @@ export default class Recipes extends React.Component {
   getData = (name) => {
         
     this.setState({ loaded: false, error: null , data: null });
-    let url = `https://api.edamam.com/search?q=${name}&app_id=8e56d6c2&app_key=3722a2efb37e9510d5ee892e2eb9676c`;
-
-    let req = new Request(url, {
-      method: 'GET'
-    });
-
-    fetch(req)
-      .then(response => response.json())
-      .then(this.showData)
-      .catch(this.badStuff)
+    let url1 = `https://api.spoonacular.com/recipes/complexSearch?maxCalories=1000&apiKey=da9f21fbecf94d709f3d22cf84e8d3f6`;
+    
+    superagent.get(url1).then (results => {
+      let caloriesDataMeals = results.body.results;
+      let caloriesMealsArr = caloriesDataMeals.map(value =>{
+          return value.id;
+      })
+      let arr =[];
+      let count = 0;
+      let mealsArr = caloriesMealsArr.map(value =>{
+        let mealsUrl = `https://api.spoonacular.com/recipes/${value}/information?apiKey=da9f21fbecf94d709f3d22cf84e8d3f6&includeNutrition=false`;
+        superagent.get(mealsUrl).then(results => {
+          let mealsData = results.body;
+               arr.push(mealsData);
+              
+              console.log(mealsData);
+              count++;
+              if(caloriesMealsArr.length === count){
+                this.setState({ loaded: true, data: arr});
+        }
+      })
+      })
+  })
   }
 
-
-  showData = (data) => {
-    this.setState({ loaded: true, data: data.hits });
-    console.log('.....................', data);
-  }
-  badStuff = (err) => {
-    this.setState({ loaded: true, error: err.message });
-  }
-  componentDidMount() {
-    //this.getData();
-    //geolocation -> fetch
-  }
   render() {
-    { console.log('000000000000', this.state.data) }
+    { console.log('00000000000000', this.state.data) }
 
     return (
       <ScrollView >
         { !this.state.loaded && (
           <Text>LOADING</Text>
         )}
-        <Button title="chicken" 
-          onPress={() => this.getData('chicken')} />
+        <Button title="500" 
+          onPress={() => this.getData('500')} />
 
-        <Button title="noodle"
-          onPress={() => this.getData('noodle')} />
+        <Button title="1000"
+          onPress={() => this.getData('1000')} />
 
-        <Button title="burger"
-          onPress={() => this.getData('burger')} />
+        <Button title="1500"
+          onPress={() => this.getData('1500')} />
 
-        <Button title="fries"
-          onPress={() => this.getData('fries')} />
-
-        <Button title="hotdog"
-          onPress={() => this.getData('hotdog')} />
-
-        <Button title="salad"
-          onPress={() => this.getData('salad')} />
-
-        <Button title="japanese"
-          onPress={() => this.getData('japanese')} />
-
-        <Button title="drink"
-          onPress={() => this.getData('drink')} />
-
-        <Button title="pasta"
-          onPress={() => this.getData('pasta')} />
-
-        <Button title="sushi"
-          onPress={() => this.getData('sushi')} />
-
-        <Button title="ice cream"
-          onPress={() => this.getData('ice cream')} />
+        <Button title="2000"
+          onPress={() => this.getData('2000')} />
 
         { this.state.error && (
           <Text style={styles.err}>{this.state.error}</Text>
@@ -93,7 +75,7 @@ export default class Recipes extends React.Component {
               height: 600,
             }}>
               <Card>
-                <Card.Image source={{ uri: comment.recipe.image, }} style={{
+                <Card.Image source={{ uri: comment.image, }} style={{
                   width: width - 20,
                   height:  300,
                   //Below lines will help to set the border radius
@@ -105,29 +87,10 @@ export default class Recipes extends React.Component {
                 }}>
                 </Card.Image>
                 <Card.Divider />
-                <Card.Title key={comment.recipe.label}>{comment.recipe.label}</Card.Title>
+                <Card.Title key={comment.title}>{comment.title}</Card.Title>
                 <Card.Divider />
-                <Text numberOfLines={5} key={comment.recipe.label} style={{ marginBottom: 10 }}>
-                  ingredientLines : {comment.recipe.ingredientLines} 
-                </Text>
-                <Text key={comment.recipe.label} style={{ marginBottom: 10 }}>
-                  calories : {comment.recipe.calories.toFixed(2)} 
-                  </Text>
-
-                  <Text key={comment.recipe.label} style={{ marginBottom: 10 }}>
-
-              fat : {comment.recipe.totalNutrients.FAT.quantity.toFixed(2)} 
-              </Text>
-
-              <Text key={comment.recipe.label} style={{ marginBottom: 10 }}>
-              Carbs : {comment.recipe.totalNutrients.CHOCDF.quantity.toFixed(2)} 
-              </Text>
-              <Text key={comment.recipe.label} style={{ marginBottom: 10 }}>
-              Protein : {comment.recipe.totalNutrients.PROCNT.quantity.toFixed(2)} 
-              </Text>
-
-              <Text key={comment.recipe.label} style={{ marginBottom: 10 }}>
-              Cholesterol :{comment.recipe.totalNutrients.CHOLE.quantity.toFixed(2)} 
+                <Text numberOfLines={5} key={comment.title} style={{ marginBottom: 10 }}>
+                summary : {comment.summary} 
                 </Text>
               </Card>
             </View>
