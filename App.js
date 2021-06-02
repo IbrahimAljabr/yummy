@@ -1,21 +1,38 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import HomeScreen from "./src/component/home";
+import RecipeScreen from "./src/component/recipe"
+import CaloryScreen from "./src/component/calory"
+// import { StyleSheet, Text, View } from "react-native";
+// // import Recipes from './src/component/recipe.js';
+// // import { Provider } from 'react-redux';
+// // import store from './src/store/index.js';
 
-export default function App() {
+// export default function App() {
+//   return (
+//     <View>
+//         <Home />
+//     </View>
+//   );
+// }
+
+const Stack = createStackNavigator();
+
+const MyStack = () => {
   return (
-    <View style={styles.container}>
-      <Text>What are you looking At !</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ title: 'home',headerShown: false }}
+        />
+        <Stack.Screen name="Find Recipes" component={RecipeScreen} />
+        <Stack.Screen name="By Max Calories" component={CaloryScreen } />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+export default MyStack ;
