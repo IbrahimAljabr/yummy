@@ -1,6 +1,16 @@
 import React from 'react';
 
-import { StyleSheet, Text, View, ScrollView, Dimensions } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Dimensions,
+  TouchableHighlight,
+  Image,
+}
+  from "react-native";
+
 import { Card, Button } from 'react-native-elements';
 const { width, height } = Dimensions.get("window");
 
@@ -12,6 +22,7 @@ export default class Recipes extends React.Component {
       loaded: true,
       error: null,
       search: '',
+      visible: true
     }
   }
 
@@ -30,9 +41,8 @@ export default class Recipes extends React.Component {
       .catch(this.badStuff)
   }
 
-
   showData = (data) => {
-    this.setState({ loaded: true, data: data.hits });
+    this.setState({ visible: false, loaded: true, data: data.hits });
     console.log('.....................', data);
   }
   badStuff = (err) => {
@@ -44,98 +54,210 @@ export default class Recipes extends React.Component {
   }
   render() {
     { console.log('000000000000', this.state.data) }
+    const display = !this.state.visible ? "none" : "flex";
+    const show = !this.state.visible ? "flex" : "none";
 
     return (
-      <ScrollView >
-        { !this.state.loaded && (
-          <Text>LOADING</Text>
-        )}
-
-        <Button title="chicken"
-          onPress={() => this.getData('chicken')} />
-
-        <Button title="noodle"
-          onPress={() => this.getData('noodle')} />
-
-        <Button title="burger"
-          onPress={() => this.getData('burger')} />
-
-        <Button title="fries"
-          onPress={() => this.getData('fries')} />
-
-        <Button title="hotdog"
-          onPress={() => this.getData('hotdog')} />
-
-        <Button title="salad"
-          onPress={() => this.getData('salad')} />
-
-        <Button title="japanese"
-          onPress={() => this.getData('japanese')} />
-
-        <Button title="drink"
-          onPress={() => this.getData('drink')} />
-
-        <Button title="pasta"
-          onPress={() => this.getData('pasta')} />
-
-        <Button title="sushi"
-          onPress={() => this.getData('sushi')} />
-
-        <Button title="ice cream"
-          onPress={() => this.getData('ice cream')} />
-
-        { this.state.error && (
-          <Text style={styles.err}>{this.state.error}</Text>
-        )}
-        { this.state.data && this.state.data.length > 0 && (
-          this.state.data.map(comment => (
-            <View style={{
-              width: width - 10,
-              height: 640,
-            }}>
-              <Card>
-                <Card.Image source={{ uri: comment.recipe.image, }} style={{
-                  width: width - 20,
-                  height: 300,
-                  //Below lines will help to set the border radius
-                  borderBottomLeftRadius: 20,
-                  borderBottomRightRadius: 20,
-                  borderTopRightRadius: 20,
-                  borderTopLeftRadius: 20,
-                  overflow: 'hidden',
-                }}>
-                </Card.Image>
-                <Card.Divider />
-                <Card.Title key={comment.recipe.label}>{comment.recipe.label}</Card.Title>
-                <Card.Divider />
-                <Text numberOfLines={5} key={comment.recipe.label} style={{ marginBottom: 10 }}>
-                  ingredientLines : {comment.recipe.ingredientLines}
-                </Text>
-                <Text key={comment.recipe.label} style={{ marginBottom: 10 }}>
-                  calories : {comment.recipe.calories.toFixed(2)}
-                </Text>
-
-                <Text key={comment.recipe.label} style={{ marginBottom: 10 }}>
-
-                  fat : {comment.recipe.totalNutrients.FAT.quantity.toFixed(2)}
-                </Text>
-
-                <Text key={comment.recipe.label} style={{ marginBottom: 10 }}>
-                  Carbs : {comment.recipe.totalNutrients.CHOCDF.quantity.toFixed(2)}
-                </Text>
-                <Text key={comment.recipe.label} style={{ marginBottom: 10 }}>
-                  Protein : {comment.recipe.totalNutrients.PROCNT.quantity.toFixed(2)}
-                </Text>
-
-                <Text key={comment.recipe.label} style={{ marginBottom: 10 }}>
-                  Cholesterol :{comment.recipe.totalNutrients.CHOLE.quantity.toFixed(2)}
-                </Text>
-              </Card>
+      <>
+        <View>
+          {!this.state.loaded && (
+            <Text>LOADING</Text>
+          )}</View>
+        <ScrollView style={{
+          // flex: 1,
+          flexWrap: 'wrap',
+          flexDirection: 'row',
+          display: display
+        }}>
+          <View style={styles.cardView}>
+            <TouchableHighlight style={styles.image}
+              onPress={() => {
+                this.getData('chicken')
+              }}>
+              <Image style={styles.image} source={require('../assets/checken-wings.jpg')} />
+            </TouchableHighlight>
+            <View style={styles.textView}>
+              <Text style={styles.itemTitle}>Chicken</Text>
             </View>
+          </View>
+          <View style={styles.cardView}>
+            <TouchableHighlight style={styles.image}
+              onPress={() => {
+                this.getData('noodle')
+              }}>
+              <Image style={styles.image} source={require('../assets/noodle-shop.jpg')} />
+            </TouchableHighlight>
+            <View style={styles.textView}>
+              <Text style={styles.itemTitle}>Noodle</Text>
+            </View>
+          </View>
+          <View style={styles.cardView}>
+            <TouchableHighlight style={styles.image}
+              onPress={() => {
+                this.getData('burger')
+              }}>
+              <Image style={styles.image} source={require('../assets/honey-mustard-chicken-burger.jpg')} />
+            </TouchableHighlight>
+            <View style={styles.textView}>
+              <Text style={styles.itemTitle}>Burger</Text>
+            </View>
+          </View>
+          <View style={styles.cardView}>
+            <TouchableHighlight style={styles.image}
+              onPress={() => {
+                this.getData('fries')
+              }}>
+              <Image style={styles.image} source={require('../assets/fries-restaurant.jpg')} />
+            </TouchableHighlight>
+            <View style={styles.textView}>
+              <Text style={styles.itemTitle}>Fries</Text>
+            </View>
+          </View>
+          <View style={styles.cardView}>
+            <TouchableHighlight style={styles.image}
+              onPress={() => {
+                this.getData('hotdog')
+              }}>
+              <Image style={styles.image} source={require('../assets/hot-dog-restaurant.jpg')} />
+            </TouchableHighlight>
+            <View style={styles.textView}>
+              <Text style={styles.itemTitle}>Hotdog</Text>
+            </View>
+          </View>
+          <View style={styles.cardView}>
+            <TouchableHighlight style={styles.image}
+              onPress={() => {
+                this.getData('salad')
+              }}>
+              <Image style={styles.image} source={require('../assets/salad.jpg')} />
+            </TouchableHighlight>
+            <View style={styles.textView}>
+              <Text style={styles.itemTitle}>Salad</Text>
+            </View>
+          </View>
+          <View style={styles.cardView}>
+            <TouchableHighlight style={styles.image}
+              onPress={() => {
+                this.getData('japanese')
+              }}>
+              <Image style={styles.image} source={require('../assets/japanese-restaurant.jpg')} />
+            </TouchableHighlight>
+            <View style={styles.textView}>
+              <Text style={styles.itemTitle}>Japanese</Text>
+            </View>
+          </View>
+          <View style={styles.cardView}>
+            <TouchableHighlight style={styles.image}
+              onPress={() => {
+                this.getData('pasta')
+              }}>
+              <Image style={styles.image} source={require('../assets/tomato-pasta.jpg')} />
+            </TouchableHighlight>
+            <View style={styles.textView}>
+              <Text style={styles.itemTitle}>Pasta</Text>
+            </View>
+          </View>
+          <View style={styles.cardView}>
+            <TouchableHighlight style={styles.image}
+              onPress={() => {
+                this.getData('sushi')
+              }}>
+              <Image style={styles.image} source={require('../assets/sushi.jpg')} />
+            </TouchableHighlight>
+            <View style={styles.textView}>
+              <Text style={styles.itemTitle}>Sushi</Text>
+            </View>
+          </View>
+          <View style={styles.cardView}>
+            <TouchableHighlight style={styles.image}
+              onPress={() => {
+                this.getData('drink')
+              }}>
+              <Image style={styles.image} source={require('../assets/teh-c-peng.jpg')} />
+            </TouchableHighlight>
+            <View style={styles.textView}>
+              <Text style={styles.itemTitle}>Drink</Text>
+            </View>
+          </View>
+          <View style={styles.cardView}>
+            <TouchableHighlight style={styles.image}
+              onPress={() => {
+                this.getData('ice cream')
+              }}>
+              <Image style={styles.image} source={require('../assets/ice-kacang.jpg')} />
+            </TouchableHighlight>
+            <View style={styles.textView}>
+              <Text style={styles.itemTitle}>Ice Cream</Text>
+            </View>
+          </View>
+        </ScrollView>
 
-          ))
-        )}
-      </ScrollView>
+        <ScrollView >
+          {this.state.error && (
+            <Text style={styles.err}>{this.state.error}</Text>
+          )}
+          {this.state.data && this.state.data.length > 0 && (
+            this.state.data.map(comment => (
+              <View style={{
+                width: width - 10,
+                height: 640,
+              }}>
+                <Card>
+                  <Card.Image source={{ uri: comment.recipe.image, }} style={{
+                    width: width - 20,
+                    height: 300,
+                    //Below lines will help to set the border radius
+                    borderBottomLeftRadius: 20,
+                    borderBottomRightRadius: 20,
+                    borderTopRightRadius: 20,
+                    borderTopLeftRadius: 20,
+                    overflow: 'hidden',
+                  }}>
+                  </Card.Image>
+                  <Card.Divider />
+                  <Card.Title key={comment.recipe.label}>{comment.recipe.label}</Card.Title>
+                  <Card.Divider />
+                  <Text numberOfLines={5} key={comment.recipe.label} style={{ marginBottom: 10 }}>
+                    ingredientLines : {comment.recipe.ingredientLines}
+                  </Text>
+                  <Text key={comment.recipe.label} style={{ marginBottom: 10 }}>
+                    calories : {comment.recipe.calories.toFixed(2)}
+                  </Text>
+
+                  <Text key={comment.recipe.label} style={{ marginBottom: 10 }}>
+
+                    fat : {comment.recipe.totalNutrients.FAT.quantity.toFixed(2)}
+                  </Text>
+
+                  <Text key={comment.recipe.label} style={{ marginBottom: 10 }}>
+                    Carbs : {comment.recipe.totalNutrients.CHOCDF.quantity.toFixed(2)}
+                  </Text>
+                  <Text key={comment.recipe.label} style={{ marginBottom: 10 }}>
+                    Protein : {comment.recipe.totalNutrients.PROCNT.quantity.toFixed(2)}
+                  </Text>
+
+                  <Text key={comment.recipe.label} style={{ marginBottom: 10 }}>
+                    Cholesterol :{comment.recipe.totalNutrients.CHOLE.quantity.toFixed(2)}
+                  </Text>
+                </Card>
+              </View>
+
+            ))
+          )}
+          <Button title='Back' buttonStyle={{
+            display: show,
+            zIndex: 100,
+            // position:'absolute',
+            // top:100,
+            marginTop: 20,
+            backgroundColor: "black",
+            opacity: .6,
+            color:"white",
+          }} onPress={() => {
+            this.setState({ visible: true, loaded: true, data: null })
+          }} />
+        </ScrollView>
+      </>
     );
   }
 }
@@ -170,5 +292,68 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     marginVertical: 8,
+  },
+  mainContainer: {
+    flex: 1,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    // display:display,
+    // justifyContent: 'center',
+  },
+  // containerStyle: {
+  //   padding: 10,
+  //   backgroundColor: 'white',
+  //   borderWidth: 0,
+  //   marginBottom: 10,
+  //   marginLeft: 10,
+  //   marginRight: 10,
+  //   borderColor: '#808080',
+  //   marginTop: 50,
+  //   elevation: 10
+  // }
+  cardView: {
+    // flex: 1,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'center',
+
+    width: width - 20,
+    height: height / 5,
+    backgroundColor: "white",
+    margin: 10,
+    marginLeft: 15,
+    marginTop: 20,
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0.5, height: 0.5 },
+    shadowOpacity: 0.5,
+    shadowRadius: 3,
+    elevation: 5,
+  },
+
+  textView: {
+    position: "absolute",
+    bottom: 1,
+    margin: 10,
+    left: 5,
+  },
+  image: {
+    width: width - 20,
+    height: height / 5,
+    borderRadius: 10,
+    opacity: 1
+  },
+  itemTitle: {
+    color: "white",
+    fontSize: 22,
+    shadowColor: "#000",
+    shadowOffset: { width: 0.8, height: 0.8 },
+    shadowOpacity: 1,
+    shadowRadius: 3,
+    marginBottom: 5,
+    fontWeight: "bold",
+    elevation: 5,
+    // position: 'absolute',
+    // top: 100,
   },
 });

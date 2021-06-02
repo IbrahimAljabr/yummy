@@ -26,9 +26,8 @@ const CarouselItem = ({ item }) => {
             >
                 <Image
                     style={styles.image}
-                    source={{
-                        uri: "https://static.onecms.io/wp-content/uploads/sites/43/2020/04/01/4583532.jpg",
-                    }}
+                    source={
+                       require('../assets/cheese.jpg')}
                 />
             </TouchableHighlight>
 

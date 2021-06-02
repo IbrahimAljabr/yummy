@@ -1,6 +1,6 @@
 export const dummyData = [
   {
-    title: "Anise Aroma Art Bazar",
+    title: "YuMmY Food",
     url: "https://i.ibb.co/hYjK44F/anise-aroma-art-bazaar-277253.jpg",
     description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
     id: 1,
